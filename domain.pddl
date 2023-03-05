@@ -58,7 +58,7 @@
   )
 
   (:action Testing     ; Enabling all tests to be performed for procedure
-  :parameters (?p - patient ?pt - procedure ?hr - number ?bp - number ?sp - number ?c - count)
+  :parameters (?p - patient ?pt - procedure ?hr - number ?bp - number ?sp - number)
   :precondition (and (performTests ?p) (not (checkHeartRate ?p)) (not (checkBloodPressure ?p)) (not (checkSPO2 ?p)) (not (checkRespirationrate ?p))) ; (<= (reading ?c) 2)
   :effect (and (checkHeartRate ?p) (checkBloodPressure ?p) (checkSPO2 ?p) (checkRespirationrate ?p)) ; (increase (reading c) 1) ; (durativeVitals15 ?p) 
   )
@@ -66,7 +66,7 @@
   (:action DoneTesting     ; Enabling all tests to be performed for procedure
   :parameters (?p - patient ?pt - procedure ?hr - number ?bp - number ?sp - number ?c - number ?tc - tCount)
   :precondition (and (durativeVitals15 ?p) (> (testingCount tc) 3))
-  :effect (and (not (performTests ?t)))   ;  (not (durativeVitals15 ?p))
+  :effect (and (not (performTests ?p)))   ;  (not (durativeVitals15 ?p))
   )
   (:action Abnormality     ; Enabling all tests to be performed for procedure
   :parameters (?p - patient ?hrn - number ?bpn - number ?spn - number ?c - number)
@@ -76,7 +76,7 @@
 
   ;########################### Tests #################################
   (:action HRNormality     
-  :parameters (?p - patient ?hr - number ?hrv - heartRate ?tc - tCount)
+  :parameters (?p - patient  ?hrv - number ?tc - tCount)
   :precondition (and (checkHeartRate ?p) (> (reading ?hrv) 50) (< (reading ?hrv) 120))
   :effect (and (heartRateNormal ?p) (not (checkHeartRate ?p)) (increase (testingCount tc) 1)) 
   )
@@ -117,7 +117,7 @@
 
 ;############################ Begin: Common flow for both the procedure types ##################################
   (:action AssessRassScore     ; Assess Rass Score
-  :parameters (?p - patient ?rsc - rassScore)
+  :parameters (?p - patient ?rsc - number)
   :precondition (and (isAssessedRassScore ?p) (>= (reading ?rsc) -1) (<= (reading ?rsc) 0))
   :effect (and (normalRassScore ?p)) 
   )
@@ -129,7 +129,7 @@
   )
 
   (:action AbnormalRassFollowUp     ; Actions to be taken when Rass socre is abnormal
-  :parameters (?p - patient, ?rsc - rassScore)
+  :parameters (?p - patient, ?rsc - number)
   :precondition (and (not (normalRassScore ?p)) (>= (reading ?rsc) 2) (<= (reading ?rsc) -2))
   :effect (and (durativeVitals15 ?p)) 
   )
@@ -160,13 +160,13 @@
   )
 
   (:action DeviceCheckNormal     ; device check - normal
-  :parameters (?p - patient ?dv - device)
+  :parameters (?p - patient)
   :precondition (and (checkDevice ?p) (deviceCheckNormal ?p))
   :effect (and (considerDischarge ?p)) 
   )
 
    (:action DeviceCheckAbnormal     ; device check - abnormal
-  :parameters (?p - patient ?dv - device ?d - doctor)
+  :parameters (?p - patient  ?d - doctor)
   :precondition (and (checkDevice ?p) (not (deviceCheckNormal ?p)))
   :effect (and (abnormal ?p) (callMD ?d)) 
   )
