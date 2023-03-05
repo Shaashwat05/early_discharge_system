@@ -45,6 +45,8 @@
   (CXR ?p - patient)
   (checkMeds ?p - patient)
   (checkRythm ?p - patient)
+  (considerDischarge ?p - patient)
+  (doWalkTest ?p - patient)
   )
   ;#################################### Actions ##########################################
   (:action CheckProcedure     ; Checking procedure and enabling testing
@@ -123,9 +125,43 @@
   :precondition (and (normalRassScore ?p))
   :effect (and (considerSDD ?p)) 
   )
+
+  (:action AbnormalRassFollowUp     ; Actions to be taken when Rass socre is abnormal
+  :parameters (?p - patient, ?rassScore - number)
+  :precondition (and (not (normalRassScore ?p)) (>= (reading ?rassScore) 2) (<= (reading ?rassScore)))
+  :effect (and (durativeVitals15 ?p)) 
+  )
+
+  (:action PerformWalkTest     ; Walk test 
+  :parameters (?p - patient ?wlkDist - number)
+  :precondition (and (doWalkTest ?p) (< (reading ?wlkDist) 400))
+  :effect (and (abnormal ?p) (callMD ?p)) 
+  )
+
+  (:action AbnormalWalkTest     ; Walk test - abnornal
+  :parameters (?p - patient ?wlkDist - number)
+  :precondition (and (doWalkTest ?p) (< (reading ?wlkDist) 400))
+  :effect (and (abnormal ?p) (callMD ?p)) 
+  )
+
+  (:action NormalWalkTest     ; Walk test - normal
+  :parameters (?p - patient ?wlkDist - number)
+  :precondition (and (doWalkTest ?p) (<= (reading ?wlkDist) 400))
+  :effect (and (considerDischarge ?p)) 
+  )
 ;############################ End: Common flow for both the procedure types #################################
 
+ (:action ConsiderSDDFollowUpablation     ; Follow-up tests for discharge consideration (ablation)
+  :parameters (?p - patient ?pt - procedure)
+  :precondition (and (considerSDD ?p) (procedureType ?p ablation))
+  :effect (and (doWalkTest ?p)) 
+  )
 
+  (:action ConsiderSDDFollowUpCIED     ; Follow-up tests for discharge consideration (CIED)
+  :parameters (?p - patient ?pt - procedure)
+  :precondition (and (considerSDD ?p) (procedureType ?p CIED))
+  :effect (and (doWalkTest ?p) (checkDevice ?p)) 
+  )
 
 ;########################### Abnormality Procedure #################################
 
