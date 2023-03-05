@@ -40,7 +40,6 @@
   (IVFluids ?p - patient)
   (callMD ?d - doctor)
   (checkDevice ?p - patient)
-  ;(getECG ? - patient)
   (startO2 ?p - patient)
   (sedationRevarsal ?p - patient)
   (OSA ?p - patient)
@@ -183,7 +182,7 @@
 (:action ABNBPCIED     ; Enabling all tests to be performed for procedure
 :parameters (?p - patient ?pt - procedure  ?hr - number ?bp - number ?sp - number ?c - number ?d - doctor)
 :precondition (and (not (bloodPressureNormal ?p)) (procedureType ?p CIED))
-:effect (and (checkDevice ?p) (getECG ?p) (callMD ?d))
+:effect (and (checkDevice ?p) (callMD ?d))
 )
 
 (:action ABNSPO2Ablation    ; Enabling all tests to be performed for procedure
@@ -201,13 +200,13 @@
 (:action ABNHRAblation    ; Enabling all tests to be performed for procedure
 :parameters (?p - patient ?pt - procedure ?hr - number ?bp - number ?sp - number ?c - number ?d - doctor)
 :precondition (and (not (heartRateNormal ?p)) (procedureType ?p Ablation))
-:effect (and (checkMeds ?p) (assessSymptoms ?p) (checkHeartRate ?p) (checkRythm ?p) (callMD ?d))  ; (getECG ?p)
+:effect (and (checkMeds ?p) (assessSymptoms ?p) (checkHeartRate ?p) (checkRythm ?p) (callMD ?d)) 
 )
 
 (:action ABNHRAblation    ; Enabling all tests to be performed for procedure
 :parameters (?p - patient ?pt - procedure ?hr - number ?bp - number ?sp - number ?c - number ?d - doctor)
 :precondition (and (not (heartRateNormal ?p)) (procedureType ?p CIED))
-:effect (and (checkMeds ?p) (checkHeartRate ?p) (checkDevice ?p) (callMD ?d))    ; (getECG ?p)
+:effect (and (checkMeds ?p) (checkHeartRate ?p) (checkDevice ?p) (callMD ?d))   
 )
 )
 
