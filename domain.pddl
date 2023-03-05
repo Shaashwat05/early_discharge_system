@@ -104,12 +104,12 @@
   ;  :effect (and (at start (checkHeartRate ?p)) (at start (checkBloodPressure ?p)) (at start  (checkSPO2 ?p)) (at start (checkRespirationrate ?p)))
   ;)
 
-    (:durative-action Vitals30
-    :parameters (?p patient)
-    :duration (= ?duration 30)
-    :condition (and (durativeVital30 ?p) (not (checkHeartRate ?p)) (not (checkBloodPressure ?p)) (not (checkSPO2 ?p)) (not (checkRespirationrate ?p)))
-    :effect (and (at start (checkHeartRate ?p)) (at start (checkBloodPressure ?p)) (at start  (checkSPO2 ?p)) (at start (checkRespirationrate ?p)))
-  )
+  ;  (:durative-action Vitals30
+  ;  :parameters (?p patient)
+  ;  :duration (= ?duration 30)
+  ;  :condition (and (durativeVital30 ?p) (not (checkHeartRate ?p)) (not (checkBloodPressure ?p)) (not (checkSPO2 ?p)) (not (checkRespirationrate ?p)))
+  ;  :effect (and (at start (checkHeartRate ?p)) (at start (checkBloodPressure ?p)) (at start  (checkSPO2 ?p)) (at start (checkRespirationrate ?p)))
+  ;)
 
 
 
@@ -168,7 +168,7 @@
 
    (:action DeviceCheckAbnormal     ; device check - abnormal
   :parameters (?p - patient ?dv - device)
-  :precondition (and (checkDevice ?p) (not ((deviceCheckNormal ?p))))
+  :precondition (and (checkDevice ?p) (not (deviceCheckNormal ?p)))
   :effect (and (abnormal ?p) (callMD ?p)) 
   )
 
