@@ -4,7 +4,7 @@
   ;#################################### types ##########################################
   (:types
     patient
-    rassScore wlkDist heartRate bloodPressure1 bloodPressure2 count SPO2 respirationRate tCount - number
+    rassScore wlkDist heartRate bloodPressure count SPO2 respirationRate tCount - number
     ablation
     implant 
     Ablation CIED - procedure
@@ -52,12 +52,12 @@
   )
   ;#################################### Actions ##########################################
   (:action CheckProcedure     ; Checking procedure and enabling testing
-  :parameters (?p - patient ?pt - procedure)
+  :parameters (?p - patient)
   :precondition (and (operationPerformed ?p))
   :effect (and (performTests ?p)) 
   )
 
-  (:action Testing     ; Enabling all tests to be performed for procedure
+    (:action Testing     ; Enabling all tests to be performed for procedure
   :parameters (?p - patient ?pt - procedure ?hr - number ?bp - number ?sp - number)
   :precondition (and (performTests ?p) (not (checkHeartRate ?p)) (not (checkBloodPressure ?p)) (not (checkSPO2 ?p)) (not (checkRespirationrate ?p))) ; (<= (reading ?c) 2)
   :effect (and (checkHeartRate ?p) (checkBloodPressure ?p) (checkSPO2 ?p) (checkRespirationrate ?p)) ; (increase (reading c) 1) ; (durativeVitals15 ?p) 
@@ -210,3 +210,6 @@
 )
 )
 
+
+
+  
