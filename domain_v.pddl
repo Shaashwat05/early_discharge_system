@@ -208,4 +208,5 @@
 :precondition (and (not (heartRateNormal ?p)) (procedureType ?p CIED))
 :effect (and (checkMeds ?p) (checkHeartRate ?p) (checkDevice ?p) (callMD ?d))    ; (getECG ?p)
 )
+)
 
