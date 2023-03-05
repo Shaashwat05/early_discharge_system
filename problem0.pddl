@@ -14,7 +14,7 @@
     (= (reading SpO2) 60)
     (= (reading respirationRate) 15)
     (= (reading bloodPressure1) 100)
-    (= (reading bloodPressure1) 80)
+    (= (reading bloodPressure2) 80)
     (= (reading rassScore) 0)
     (= (reading wlkDist) 450)
     (deviceCheckNormal patient1)
