@@ -10,6 +10,7 @@
     Ablation CIED - procedure
     test
     doctor
+    device
   )
   ;#################################### Functions ##########################################
   (:functions
@@ -47,6 +48,7 @@
   (checkRythm ?p - patient)
   (considerDischarge ?p - patient)
   (doWalkTest ?p - patient)
+  (deviceCheckNormal ?p)
   )
   ;#################################### Actions ##########################################
   (:action CheckProcedure     ; Checking procedure and enabling testing
@@ -132,12 +134,6 @@
   :effect (and (durativeVitals15 ?p)) 
   )
 
-  (:action PerformWalkTest     ; Walk test 
-  :parameters (?p - patient ?wlkDist - number)
-  :precondition (and (doWalkTest ?p) (< (reading ?wlkDist) 400))
-  :effect (and (abnormal ?p) (callMD ?p)) 
-  )
-
   (:action AbnormalWalkTest     ; Walk test - abnornal
   :parameters (?p - patient ?wlkDist - number)
   :precondition (and (doWalkTest ?p) (< (reading ?wlkDist) 400))
@@ -161,6 +157,18 @@
   :parameters (?p - patient ?pt - procedure)
   :precondition (and (considerSDD ?p) (procedureType ?p CIED))
   :effect (and (doWalkTest ?p) (checkDevice ?p)) 
+  )
+
+  (:action DeviceCheckNormal     ; device check - normal
+  :parameters (?p - patient ?dv - device)
+  :precondition (and (checkDevice ?p) (deviceCheckNormal ?p))
+  :effect (and (considerDischarge ?p)) 
+  )
+
+   (:action DeviceCheckAbnormal     ; device check - abnormal
+  :parameters (?p - patient ?dv - device)
+  :precondition (and (checkDevice ?p) (not ((deviceCheckNormal ?p))))
+  :effect (and (abnormal ?p) (callMD ?p)) 
   )
 
 ;########################### Abnormality Procedure #################################
