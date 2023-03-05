@@ -4,7 +4,7 @@
   ;#################################### types ##########################################
   (:types
     patient
-    rassScore heartRate bloodPressure1 bloodPressure2 count SPO2 respirationRate - number
+    rassScore wlkDist heartRate bloodPressure1 bloodPressure2 count SPO2 respirationRate - number
     ablation
     implant 
     Ablation CIED - procedure
