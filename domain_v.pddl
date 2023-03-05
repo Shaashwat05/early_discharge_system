@@ -4,10 +4,10 @@
   ;#################################### types ##########################################
   (:types
     patient
-    number
+    heartRate bloodPressure1 bloodPressure2 count SPO2 respirationRate - number
     ablation
     implant 
-    Ablation, CIED - procedure
+    Ablation CIED - procedure
     test
     doctor
   )
@@ -54,7 +54,7 @@
   )
 
   (:action Testing     ; Enabling all tests to be performed for procedure
-  :parameters (?p - patient ?pt - procedure ?t - test ?hr - number ?bp - number ?sp - number ?c - number)
+  :parameters (?p - patient ?pt - procedure ?t - test ?hr - number ?bp - number ?sp - number ?c - count)
   :precondition (and (performTests ?p) (<= (reading ?c) 2))
   :effect (and (increase (reading c) 1) (durativeVitals ?p))
   )
@@ -72,7 +72,7 @@
 
   ;########################### Tests #################################
   (:action HRNormality     
-  :parameters (?p - patient ?hr - number ?hrv - number ?hrn - normality of heart rate)
+  :parameters (?p - patient ?hr - number ?hrv - heartRate ?hrn - normality of heart rate)
   :precondition (and (checkHeartRate ?p) (> (reading ?hrv) 50) (< (reading ?hrv) 120))
   :effect (and (heartRateNormal ?p) (not (checkHeartRate ?p))) 
   )
