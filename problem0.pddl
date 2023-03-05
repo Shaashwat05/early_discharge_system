@@ -15,6 +15,10 @@
     (= (reading respirationRate) 15)
     (= (reading bloopPressure1) 100)
     (= (reading bloopPressure1) 80)
+    (= (reading rassScore) 0)
+    (= (reading wlkDist) 450)
+    (deviceCheckNormal patient1)
+
 
 
     )

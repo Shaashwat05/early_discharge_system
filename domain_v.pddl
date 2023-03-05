@@ -4,7 +4,7 @@
   ;#################################### types ##########################################
   (:types
     patient
-    heartRate bloodPressure1 bloodPressure2 count SPO2 respirationRate - number
+    rassScore heartRate bloodPressure1 bloodPressure2 count SPO2 respirationRate - number
     ablation
     implant 
     Ablation CIED - procedure
@@ -117,8 +117,8 @@
 
 ;############################ Begin: Common flow for both the procedure types ##################################
   (:action AssessRassScore     ; Assess Rass Score
-  :parameters (?p - patient ?testResult - number)
-  :precondition (and (isAssessedRassScore ?p) (>= (reading ?testResult) -1) (<= (reading ?testResult) 0))
+  :parameters (?p - patient ?rsc - rassScore)
+  :precondition (and (isAssessedRassScore ?p) (>= (reading ?rsc) -1) (<= (reading ?rsc) 0))
   :effect (and (normalRassScore ?p)) 
   )
 
@@ -129,8 +129,8 @@
   )
 
   (:action AbnormalRassFollowUp     ; Actions to be taken when Rass socre is abnormal
-  :parameters (?p - patient, ?rassScore - number)
-  :precondition (and (not (normalRassScore ?p)) (>= (reading ?rassScore) 2) (<= (reading ?rassScore)))
+  :parameters (?p - patient, ?rsc - rassScore)
+  :precondition (and (not (normalRassScore ?p)) (>= (reading ?rsc) 2) (<= (reading ?rsc) -2))
   :effect (and (durativeVitals15 ?p)) 
   )
 
