@@ -3,7 +3,7 @@ import unittest
 from urllib import parse, request
 
 def get_problem_result(problem_file_name):
-    with open('domain_v.pddl', 'r') as domain_file:
+    with open('domain.pddl', 'r') as domain_file:
         with open(problem_file_name, 'r') as problem_file:
             data = {'domain': domain_file.read(), 'problem': problem_file.read()}
     response = {}
