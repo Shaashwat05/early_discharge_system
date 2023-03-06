@@ -5,7 +5,7 @@
   (:types
     patient
     ; rassScore wlkDist heartRate bloodPressure count SPO2 respirationRate tCount - number
-    heartRate bloodPressure respirationRate SPO2 rassScore wlkDist - number
+    heartRate bloodPressure1 bloodPressure2 respirationRate SPO2 rassScore wlkDist - number
     ; implant 
     ablation CIED - procedure
     ; test
@@ -85,7 +85,7 @@
   :effect (and (heartRateNormal ?p) (not (checkHeartRate ?p)) (checkedHeartRate ?p)) 
   )
   (:action BPNormality     
-  :parameters (?p - patient ?bpv1 - bloodPressure  ?bpv2 - bloodPressure)
+  :parameters (?p - patient ?bpv1 - bloodPressure1  ?bpv2 - bloodPressure2)
   :precondition (and (checkBloodPressure ?p) (>= (reading ?bpv1) 90) (<= (reading ?bpv1) 130) (>= (reading ?bpv2) 60) (<= (reading ?bpv2) 90))
   :effect (and (bloodPressureNormal ?p) (not (checkBloodPressure ?p)) (checkedBloodPressure ?p)) 
   )
@@ -185,13 +185,13 @@
 ; ;########################### Abnormality Procedure #################################
 
 (:action ABNBPAblation     ; Enabling all tests to be performed for procedure
-:parameters (?p - patient ?pt - ablation ?d - doctor ?bpv1 - bloodPressure  ?bpv2 - bloodPressure)
+:parameters (?p - patient ?pt - ablation ?d - doctor ?bpv1 - bloodPressure1 ?bpv2 - bloodPressure2)
 :precondition (and (not (bloodPressureNormal ?p)) (or(< (reading ?bpv1) 90) (> (reading ?bpv1) 130)) (or(< (reading ?bpv2) 60) (> (reading ?bpv2) 90)) (procedureType ?p ?pt))
 :effect (and (assessSymptoms ?p) (IVFluids ?p) (callMD ?d))
 )
 
 (:action ABNBPCIED     ; Enabling all tests to be performed for procedure
-:parameters (?p - patient ?pt - CIED ?d - doctor ?bpv1 - bloodPressure  ?bpv2 - bloodPressure)
+:parameters (?p - patient ?pt - CIED ?d - doctor ?bpv1 - bloodPressure1  ?bpv2 - bloodPressure2)
 :precondition (and (not (bloodPressureNormal ?p)) (or(< (reading ?bpv1) 90) (> (reading ?bpv1) 130)) (or(< (reading ?bpv2) 60) (> (reading ?bpv2) 90)) (procedureType ?p ?pt))
 :effect (and (checkDevice ?p) (callMD ?d))
 )
