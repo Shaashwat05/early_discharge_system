@@ -57,41 +57,42 @@
   :effect (and (performTests ?p)) 
   )
 
+
     (:action Testing     ; Enabling all tests to be performed for procedure
-  :parameters (?p - patient ?pt - procedure ?hr - number ?bp - number ?sp - number)
+  :parameters (?p - patient)
   :precondition (and (performTests ?p) (not (checkHeartRate ?p)) (not (checkBloodPressure ?p)) (not (checkSPO2 ?p)) (not (checkRespirationrate ?p))) ; (<= (reading ?c) 2)
   :effect (and (checkHeartRate ?p) (checkBloodPressure ?p) (checkSPO2 ?p) (checkRespirationrate ?p)) ; (increase (reading c) 1) ; (durativeVitals15 ?p) 
   )
 
   (:action DoneTesting     ; Enabling all tests to be performed for procedure
-  :parameters (?p - patient ?pt - procedure ?hr - number ?bp - number ?sp - number ?c - number ?tc - tCount)
+  :parameters (?p - patient ?tc - tCount)
   :precondition (and (durativeVitals15 ?p) (> (testingCount tc) 3))
   :effect (and (not (performTests ?p)))   ;  (not (durativeVitals15 ?p))
   )
   (:action Abnormality     ; Enabling all tests to be performed for procedure
-  :parameters (?p - patient ?hrn - number ?bpn - number ?spn - number ?c - number)
+  :parameters (?p - patient)
   :precondition (or (not (respirationRateNormal ?p)) (not (heartRateNormal ?p)) (not (bloodPressureNormal ?p)) (not (SPNormal ?p)))
   :effect (and (Abnormal ?p))
   )
 
   ;########################### Tests #################################
   (:action HRNormality     
-  :parameters (?p - patient  ?hrv - number ?tc - tCount)
+  :parameters (?p - patient  ?hrv - heartRate ?tc - tCount)
   :precondition (and (checkHeartRate ?p) (> (reading ?hrv) 50) (< (reading ?hrv) 120))
   :effect (and (heartRateNormal ?p) (not (checkHeartRate ?p)) (increase (testingCount tc) 1)) 
   )
   (:action BPNormality     
-  :parameters (?p - patient ?bp - number ?bpv1 - number  ?bpv2 - number ?bpn - number ?tc - tCount)
-  :precondition (and (checkBloodPressure ?p) (>= (reading ?bpv1) 90) (<= (reading ?bpv1) 130) (>= (reading ?bpv2) 60) (<= (reading ?bpv1) 90))
+  :parameters (?p - patient ?bpv1 - bloodPressure  ?bpv2 - bloodPressure ?tc - tCount)
+  :precondition (and (checkBloodPressure ?p) (>= (reading ?bpv1) 90) (<= (reading ?bpv1) 130) (>= (reading ?bpv2) 60) (<= (reading ?bpv2) 90))
   :effect (and (bloodPressureNormal ?p) (not (checkBloodPressure ?p)) (increase (testingCount tc) 1)) 
   )
   (:action RRNormality     
-  :parameters (?p - patient ?rr - number ?tc - tCount)
+  :parameters (?p - patient ?rr - respirationRate ?tc - tCount)
   :precondition (and (checkRespirationRate ?p) (>= (reading ?rr) 12) (<= (reading ?rr) 20))
   :effect (and (respirationRateNormal ?p) (not (checkRespirationRate ?p)) (increase (testingCount tc) 1)) 
   )
   (:action SPNormality    
-  :parameters (?p - patient ?sp - number ?tc - tCount)
+  :parameters (?p - patient ?sp - SPO2 ?tc - tCount)
   :precondition (and (checkSPO2 ?p) (<= (reading ?sp) 90))
   :effect (and (SPNormal ?p) (not (checkSPO2 ?p)) (increase (testingCount tc) 1)) 
   )
@@ -117,7 +118,7 @@
 
 ;############################ Begin: Common flow for both the procedure types ##################################
   (:action AssessRassScore     ; Assess Rass Score
-  :parameters (?p - patient ?rsc - number)
+  :parameters (?p - patient ?rsc - rassScore)
   :precondition (and (isAssessedRassScore ?p) (>= (reading ?rsc) -1) (<= (reading ?rsc) 0))
   :effect (and (normalRassScore ?p)) 
   )
@@ -129,20 +130,20 @@
   )
 
   (:action AbnormalRassFollowUp     ; Actions to be taken when Rass socre is abnormal
-  :parameters (?p - patient, ?rsc - number)
+  :parameters (?p - patient, ?rsc - rassScore)
   :precondition (and (not (normalRassScore ?p)) (>= (reading ?rsc) 2) (<= (reading ?rsc) -2))
   :effect (and (durativeVitals15 ?p)) 
   )
 
   (:action AbnormalWalkTest     ; Walk test - abnornal
-  :parameters (?p - patient ?wlkDist - number ?d - doctor)
-  :precondition (and (doWalkTest ?p) (< (reading ?wlkDist) 400))
+  :parameters (?p - patient ?wlk - wlkDist ?d - doctor)
+  :precondition (and (doWalkTest ?p) (< (reading ?wlk) 400))
   :effect (and (abnormal ?p) (callMD ?d)) 
   )
 
   (:action NormalWalkTest     ; Walk test - normal
-  :parameters (?p - patient ?wlkDist - number)
-  :precondition (and (doWalkTest ?p) (<= (reading ?wlkDist) 400))
+  :parameters (?p - patient ?wlk - wlkDist)
+  :precondition (and (doWalkTest ?p) (<= (reading ?wlk) 400))
   :effect (and (considerDischarge ?p)) 
   )
 ;############################ End: Common flow for both the procedure types #################################
@@ -174,42 +175,40 @@
 ;########################### Abnormality Procedure #################################
 
 (:action ABNBPAblation     ; Enabling all tests to be performed for procedure
-:parameters (?p - patient ?pt - procedure  ?hr - number ?bp - number ?sp - number ?c - number ?d - doctor)
+:parameters (?p - patient ?pt - procedure ?d - doctor)
 :precondition (and (not (bloodPressureNormal ?p)) (procedureType ?p Ablation))
 :effect (and (assessSymptoms ?p) (IVFluids ?p) (callMD ?d))
 )
 
 (:action ABNBPCIED     ; Enabling all tests to be performed for procedure
-:parameters (?p - patient ?pt - procedure  ?hr - number ?bp - number ?sp - number ?c - number ?d - doctor)
+:parameters (?p - patient ?pt - procedure ?d - doctor)
 :precondition (and (not (bloodPressureNormal ?p)) (procedureType ?p CIED))
 :effect (and (checkDevice ?p) (callMD ?d))
 )
 
 (:action ABNSPO2Ablation    ; Enabling all tests to be performed for procedure
-:parameters (?p - patient ?pt - procedure ?hr - number ?bp - number ?sp - number ?c - number ?d - doctor)
+:parameters (?p - patient ?pt - procedure ?d - doctor)
 :precondition (and (not (SPNormal ?p)) (procedureType ?p Ablation))
 :effect (and (startO2 ?p) (sedationRevarsal ?p) (callMD ?d) (OSA ?p))
 )
 
 (:action ABNBSPO2CIED     ; Enabling all tests to be performed for procedure
-:parameters (?p - patient ?pt - procedure ?hr - number ?bp - number ?sp - number ?c - number ?d - doctor)
+:parameters (?p - patient ?pt - procedure ?d - doctor)
 :precondition (and (not (bloodPressureNormal ?p)) (procedureType ?p CIED))
 :effect (and (startO2 ?p) (CXR ?p) (callMD ?d))
 )
 
 (:action ABNHRAblation    ; Enabling all tests to be performed for procedure
-:parameters (?p - patient ?pt - procedure ?hr - number ?bp - number ?sp - number ?c - number ?d - doctor)
+:parameters (?p - patient ?pt - procedure ?d - doctor)
 :precondition (and (not (heartRateNormal ?p)) (procedureType ?p Ablation))
 :effect (and (checkMeds ?p) (assessSymptoms ?p) (checkHeartRate ?p) (checkRythm ?p) (callMD ?d)) 
 )
 
 (:action ABNHRAblation    ; Enabling all tests to be performed for procedure
-:parameters (?p - patient ?pt - procedure ?hr - number ?bp - number ?sp - number ?c - number ?d - doctor)
+:parameters (?p - patient ?pt - procedure ?d - doctor)
 :precondition (and (not (heartRateNormal ?p)) (procedureType ?p CIED))
 :effect (and (checkMeds ?p) (checkHeartRate ?p) (checkDevice ?p) (callMD ?d))   
 )
 )
-
-
 
   
