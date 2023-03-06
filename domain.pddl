@@ -96,7 +96,7 @@
   )
   (:action SPNormality    
   :parameters (?p - patient ?sp - SPO2 )
-  :precondition (and (checkSPO2 ?p) (<= (reading ?sp) 90))
+  :precondition (and (checkSPO2 ?p) (>= (reading ?sp) 90))
   :effect (and (SPNormal ?p) (not (checkSPO2 ?p)) (checkedSPO2 ?p)) 
   )
 

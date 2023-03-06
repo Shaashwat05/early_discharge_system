@@ -1,11 +1,17 @@
 (define (problem soko-ichii-pallette)
   (:domain earlyDischarge)
   (:objects
-    heartRate bloodPressure1 bloodPressure2 count SPO2 respirationRate - number
     patient1 - patient
-    ablation CIED - procedure
-    hear
-    )
+    heartRate1 - heartRate
+    bloodPressure1 bloodPressure2 - bloodPressure
+    SPO21 - SpO2
+    respirationRate1 - respirationRate
+    CIED1 - CIED
+    ablation1 - ablation
+    rassScore1 - rassScore
+    wlkDist1 - wlkDist
+    Hardik - doctor
+  )
   (:init
     (= (reading count) 0)
     (operationPerformed patient1)

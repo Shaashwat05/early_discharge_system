@@ -1,45 +1,28 @@
-(define (problem soko-ni-orders)
-  (:domain sokorobotto)
+(define (problem soko-ichii-pallette)
+  (:domain earlyDischarge)
   (:objects
-    shipment1 shipment2 - shipment
-    order1 order2 - order
-    loc1 loc2 loc3 pack1 - location
-    robot1 robot2 - robot
-    pallette1 pallette2 - pallette
-    socks1 socks2 book1 - saleitem
-    )
+    patient1 - patient
+    heartRate1 - heartRate
+    bloodPressure1 bloodPressure2 - bloodPressure
+    SPO21 - SpO2
+    respirationRate1 - respirationRate
+    CIED1 - CIED
+    ablation1 - ablation
+    rassScore1 - rassScore
+    wlkDist1 - wlkDist
+    Hardik - doctor
+  )
   (:init
-    (ships shipment1 order1)
-    (orders order1 socks1)
-    (orders order1 book1)
-    (unstarted shipment1)
-    (ships shipment2 order2)
-    (orders order2 socks2)
-    (unstarted shipment2)
-    (packing-location pack1)
-    (available pack1)
-    (contains pallette1 socks1)
-    (contains pallette1 socks2)
-    (contains pallette2 book1)
-    (free robot1)
-    (free robot2)
-    (connected loc1 loc2)
-    (connected loc2 loc1)
-    (connected loc2 loc3)
-    (connected loc3 loc2)
-    (connected loc2 pack1)
-    (connected pack1 loc2)
-    (at pallette1 loc1)
-    (at pallette2 loc2)
-    (at robot1 loc1)
-    (at robot2 loc2)
-    (no-robot loc3)
-    (no-robot pack1)
-    (no-pallette loc3)
-    (no-pallette pack1)
-    (available pack1)
+    (operationPerformed patient1)
+    (procedureType patient1 ablation1)
+    (= (reading heartRate1) 80)
+    (= (reading SPO21) 90)
+    (= (reading respirationRate1) 15)
+    (= (reading bloodPressure1) 100)
+    (= (reading bloodPressure2) 80)
+    (= (reading rassScore1) 0)
+    (= (reading wlkDist1) 450)
+    (deviceCheckNormal patient1)
     )
-  (:goal (and (includes shipment1 socks1)
-              (includes shipment1 book1)
-              (includes shipment2 socks2)))
+  (:goal (and (startO2 patient1)))
 )
