@@ -14,7 +14,7 @@
   )
   (:init
     (operationPerformed patient1)
-    (procedureType patient1 CIED1)
+    (procedureType patient1 ablation1)
     (= (reading heartRate1) 80)
     (= (reading SPO21) 91)
     (= (reading respirationRate1) 15)
