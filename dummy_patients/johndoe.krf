@@ -1,0 +1,12 @@
+(in-microtheory MedProj)
+
+(isa JohnDoe Patient)
+(procedureType JohnDoe ablation)
+(reading JohnDoe heartRate 80)
+(reading JohnDoe SpO2 60)
+(reading JohnDoe respirationRate 15)
+(reading JohnDoe bloodPressure1 100)
+(reading JohnDoe bloodPressure2 80)
+(reading JohnDoe rassScore 0)
+(reading JohnDoe wlkDist 450)
+(deviceCheckNormal JohnDoe)
