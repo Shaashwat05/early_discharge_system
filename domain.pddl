@@ -186,13 +186,13 @@
 
 (:action ABNBPAblation     ; Enabling all tests to be performed for procedure
 :parameters (?p - patient ?pt - ablation ?d - doctor ?bpv1 - bloodPressure  ?bpv2 - bloodPressure)
-:precondition (and (not (bloodPressureNormal ?p)) (< (reading ?bpv1) 90) (> (reading ?bpv1) 130) (< (reading ?bpv2) 60) (> (reading ?bpv2) 90) (procedureType ?p ?pt))
+:precondition (and (not (bloodPressureNormal ?p)) (or(< (reading ?bpv1) 90) (> (reading ?bpv1) 130)) (or(< (reading ?bpv2) 60) (> (reading ?bpv2) 90)) (procedureType ?p ?pt))
 :effect (and (assessSymptoms ?p) (IVFluids ?p) (callMD ?d))
 )
 
 (:action ABNBPCIED     ; Enabling all tests to be performed for procedure
 :parameters (?p - patient ?pt - CIED ?d - doctor ?bpv1 - bloodPressure  ?bpv2 - bloodPressure)
-:precondition (and (not (bloodPressureNormal ?p)) (< (reading ?bpv1) 90) (> (reading ?bpv1) 130) (< (reading ?bpv2) 60) (> (reading ?bpv2) 90) (procedureType ?p ?pt))
+:precondition (and (not (bloodPressureNormal ?p)) (or(< (reading ?bpv1) 90) (> (reading ?bpv1) 130)) (or(< (reading ?bpv2) 60) (> (reading ?bpv2) 90)) (procedureType ?p ?pt))
 :effect (and (checkDevice ?p) (callMD ?d))
 )
 
@@ -210,13 +210,13 @@
 
 (:action ABNHRAblation    ; Enabling all tests to be performed for procedure
 :parameters (?p - patient ?pt - ablation ?d - doctor ?hrv - heartRate)
-:precondition (and (not (heartRateNormal ?p)) (<= (reading ?hrv) 50) (>= (reading ?hrv) 120) (procedureType ?p ?pt))
+:precondition (and (not (heartRateNormal ?p)) (or(<= (reading ?hrv) 50) (>= (reading ?hrv) 120)) (procedureType ?p ?pt))
 :effect (and (checkMeds ?p) (assessSymptoms ?p) (checkHeartRate ?p) (checkRythm ?p) (callMD ?d)) 
 )
 
 (:action ABNHRCIED    ; Enabling all tests to be performed for procedure
 :parameters (?p - patient ?pt - CIED ?d - doctor ?hrv - heartRate)
-:precondition (and (not (heartRateNormal ?p)) (<= (reading ?hrv) 50) (>= (reading ?hrv) 120) (procedureType ?p ?pt))
+:precondition (and (not (heartRateNormal ?p)) (or((<= (reading ?hrv) 50) (>= (reading ?hrv) 120))) (procedureType ?p ?pt))
 :effect (and (checkMeds ?p) (checkHeartRate ?p) (checkDevice ?p) (callMD ?d))   
 )
 )
