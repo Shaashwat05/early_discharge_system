@@ -7,7 +7,7 @@
     rassScore wlkDist heartRate bloodPressure count SPO2 respirationRate tCount - number
     ablation
     implant 
-    Ablation CIED - procedure
+    ablation CIED - procedure
     test
     doctor
     device
@@ -57,8 +57,7 @@
   :effect (and (performTests ?p)) 
   )
 
-
-    (:action Testing     ; Enabling all tests to be performed for procedure
+  (:action Testing     ; Enabling all tests to be performed for procedure
   :parameters (?p - patient)
   :precondition (and (performTests ?p) (not (checkHeartRate ?p)) (not (checkBloodPressure ?p)) (not (checkSPO2 ?p)) (not (checkRespirationrate ?p))) ; (<= (reading ?c) 2)
   :effect (and (checkHeartRate ?p) (checkBloodPressure ?p) (checkSPO2 ?p) (checkRespirationrate ?p)) ; (increase (reading c) 1) ; (durativeVitals15 ?p) 
@@ -181,8 +180,8 @@
 )
 
 (:action ABNBPCIED     ; Enabling all tests to be performed for procedure
-:parameters (?p - patient ?pt - procedure ?d - doctor)
-:precondition (and (not (bloodPressureNormal ?p)) (procedureType ?p CIED))
+:parameters (?p - patient ?pt - CIED ?d - doctor)
+:precondition (and (not (bloodPressureNormal ?p)) (procedureType ?p ?pt))
 :effect (and (checkDevice ?p) (callMD ?d))
 )
 

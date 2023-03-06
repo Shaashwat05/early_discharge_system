@@ -6,7 +6,8 @@
     SPO21 - SpO2
     respirationRate1 - respirationRate
     patient1 - patient
-    ablation CIED - procedure
+    CIED1 - CIED
+    ablation1 - ablation
     rassScore1 - rassScore
     wlkDist1 - wlkDist
     Hardik - doctor
@@ -16,7 +17,8 @@
   (:init
     (= (testingCount tc) 0)
     (operationPerformed patient1)
-    (procedureType patient1 ablation)
+    (procedureType patient1 ablation1)
+    (not (procedureType patient1 CIED1))
     (= (reading heartRate1) 80)
     (= (reading SpO21) 60)
     (= (reading respirationRate1) 15)
