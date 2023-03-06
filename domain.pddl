@@ -216,7 +216,7 @@
 
 (:action ABNHRCIED    ; Enabling all tests to be performed for procedure
 :parameters (?p - patient ?pt - CIED ?d - doctor)
-:precondition (and (not (heartRateNormal ?p)) (procedureType ?p ?pt))
+:precondition (and (not (heartRateNormal ?p)) (<= (reading ?hrv) 50) (>= (reading ?hrv) 120) (procedureType ?p ?pt))
 :effect (and (checkMeds ?p) (checkHeartRate ?p) (checkDevice ?p) (callMD ?d))   
 )
 )
