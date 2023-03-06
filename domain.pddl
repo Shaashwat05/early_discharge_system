@@ -198,13 +198,13 @@
 
 (:action ABNSPO2Ablation    ; Enabling all tests to be performed for procedure
 :parameters (?p - patient ?pt - ablation ?d - doctor)
-:precondition (and (not (SPNormal ?p)) (procedureType ?p ?pt))
+:precondition (and (not (SPNormal ?p)) (< (reading ?sp) 90) (procedureType ?p ?pt))
 :effect (and (startO2 ?p) (sedationRevarsal ?p) (callMD ?d) (OSA ?p))
 )
 
 (:action ABNBSPO2CIED     ; Enabling all tests to be performed for procedure
 :parameters (?p - patient ?pt - CIED ?d - doctor)
-:precondition (and (not (SPNormal ?p)) (procedureType ?p ?pt))
+:precondition (and (not (SPNormal ?p)) (< (reading ?sp) 90) (procedureType ?p ?pt))
 :effect (and (startO2 ?p) (CXR ?p) (callMD ?d))
 )
 
