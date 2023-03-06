@@ -185,37 +185,37 @@
 ; ;########################### Abnormality Procedure #################################
 
 (:action ABNBPAblation     ; Enabling all tests to be performed for procedure
-:parameters (?p - patient ?pt - ablation ?d - doctor)
+:parameters (?p - patient ?pt - ablation ?d - doctor ?bpv1 - bloodPressure  ?bpv2 - bloodPressure)
 :precondition (and (not (bloodPressureNormal ?p)) (< (reading ?bpv1) 90) (> (reading ?bpv1) 130) (< (reading ?bpv2) 60) (> (reading ?bpv2) 90) (procedureType ?p ?pt))
 :effect (and (assessSymptoms ?p) (IVFluids ?p) (callMD ?d))
 )
 
 (:action ABNBPCIED     ; Enabling all tests to be performed for procedure
-:parameters (?p - patient ?pt - CIED ?d - doctor)
+:parameters (?p - patient ?pt - CIED ?d - doctor ?bpv1 - bloodPressure  ?bpv2 - bloodPressure)
 :precondition (and (not (bloodPressureNormal ?p)) (< (reading ?bpv1) 90) (> (reading ?bpv1) 130) (< (reading ?bpv2) 60) (> (reading ?bpv2) 90) (procedureType ?p ?pt))
 :effect (and (checkDevice ?p) (callMD ?d))
 )
 
 (:action ABNSPO2Ablation    ; Enabling all tests to be performed for procedure
-:parameters (?p - patient ?pt - ablation ?d - doctor)
+:parameters (?p - patient ?pt - ablation ?d - doctor ?sp - SPO2)
 :precondition (and (not (SPNormal ?p)) (< (reading ?sp) 90) (procedureType ?p ?pt))
 :effect (and (startO2 ?p) (sedationRevarsal ?p) (callMD ?d) (OSA ?p))
 )
 
 (:action ABNBSPO2CIED     ; Enabling all tests to be performed for procedure
-:parameters (?p - patient ?pt - CIED ?d - doctor)
+:parameters (?p - patient ?pt - CIED ?d - doctor ?sp - SPO2)
 :precondition (and (not (SPNormal ?p)) (< (reading ?sp) 90) (procedureType ?p ?pt))
 :effect (and (startO2 ?p) (CXR ?p) (callMD ?d))
 )
 
 (:action ABNHRAblation    ; Enabling all tests to be performed for procedure
-:parameters (?p - patient ?pt - ablation ?d - doctor)
+:parameters (?p - patient ?pt - ablation ?d - doctor ?hrv - heartRate)
 :precondition (and (not (heartRateNormal ?p)) (<= (reading ?hrv) 50) (>= (reading ?hrv) 120) (procedureType ?p ?pt))
 :effect (and (checkMeds ?p) (assessSymptoms ?p) (checkHeartRate ?p) (checkRythm ?p) (callMD ?d)) 
 )
 
 (:action ABNHRCIED    ; Enabling all tests to be performed for procedure
-:parameters (?p - patient ?pt - CIED ?d - doctor)
+:parameters (?p - patient ?pt - CIED ?d - doctor ?hrv - heartRate)
 :precondition (and (not (heartRateNormal ?p)) (<= (reading ?hrv) 50) (>= (reading ?hrv) 120) (procedureType ?p ?pt))
 :effect (and (checkMeds ?p) (checkHeartRate ?p) (checkDevice ?p) (callMD ?d))   
 )
