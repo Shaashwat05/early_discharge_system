@@ -3,7 +3,8 @@
   (:objects
     patient1 - patient
     heartRate1 - heartRate
-    bloodPressure1 bloodPressure2 - bloodPressure
+    bp1 - bloodPressure1
+    bp2 - bloodPressure2
     SPO21 - SpO2
     respirationRate1 - respirationRate
     CIED1 - CIED
@@ -18,11 +19,11 @@
     (= (reading heartRate1) 80)
     (= (reading SPO21) 91)
     (= (reading respirationRate1) 15)
-    (= (reading bloodPressure1) 100)
-    (= (reading bloodPressure2) 80)
+    (= (reading bp1) 100)
+    (= (reading bp2) 80)
     (= (reading rassScore1) 0)
     (= (reading wlkDist1) 450)
     (deviceCheckNormal patient1)
     )
-  (:goal (and (considerDischarge patient1)))
+  (:goal (and (callMD Hardik)))
 )
