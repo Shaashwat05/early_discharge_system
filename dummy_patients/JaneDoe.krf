@@ -1,0 +1,12 @@
+(in-microtheory MedProj)
+
+(isa JaneDoe Patient)
+(procedureType JaneDoe CIED1)
+(reading JaneDoe heartRate1 125)
+(reading JaneDoe SpO21 20)
+(reading JaneDoe respirationRate1 35)
+(reading JaneDoe bloodPressure1 170)
+(reading JaneDoe bloodPressure2 30)
+(reading JaneDoe rassScore1 0)
+(reading JaneDoe wlkDist1 450)
+(deviceCheckNormal JaneDoe)

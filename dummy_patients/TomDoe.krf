@@ -1,0 +1,12 @@
+(in-microtheory MedProj)
+
+(isa TomDoe Patient)
+(procedureType TomDoe ablation1)
+(reading TomDoe heartRate1 80)
+(reading TomDoe SpO21 90)
+(reading TomDoe respirationRate1 15)
+(reading TomDoe bloodPressure1 100)
+(reading TomDoe bloodPressure2 80)
+(reading TomDoe rassScore1 0)
+(reading TomDoe wlkDist1 450)
+(deviceCheckNormal TomDoe)

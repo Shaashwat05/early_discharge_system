@@ -16,5 +16,5 @@
     (operationPerformed patient1)
     ;;;;
     )
-  (:goal (and (considerDischarge patient1)))
+  (:goal (and (startO2 patient1)))
 )

@@ -1,0 +1,12 @@
+(in-microtheory MedProj)
+
+(isa AliceDoe Patient)
+(procedureType AliceDoe ablation1)
+(reading AliceDoe heartRate1 80)
+(reading AliceDoe SpO21 91)
+(reading AliceDoe respirationRate1 15)
+(reading AliceDoe bloodPressure1 100)
+(reading AliceDoe bloodPressure2 80)
+(reading AliceDoe rassScore1 0)
+(reading AliceDoe wlkDist1 450)
+(deviceCheckNormal AliceDoe)

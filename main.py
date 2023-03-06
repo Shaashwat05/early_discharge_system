@@ -34,7 +34,7 @@ def problem_gen(patient):
     return {task:problem for task, problem in zip(tasks, problems)}
 
 def get_problem_result(problem):
-    with open('domain_v.pddl', 'r') as domain_file:
+    with open('domain.pddl', 'r') as domain_file:
         data = {'domain': domain_file.read(), 'problem': problem}
     response = {}
     while not response or response['result'] == 'Server busy...':
@@ -58,6 +58,9 @@ def get_outcomes(patient):
 
 def main():
     print(get_outcomes("JohnDoe"))
+    print(get_outcomes("JaneDoe"))
+    print(get_outcomes("TomDoe"))
+    print(get_outcomes("AliceDoe"))
 
 if __name__ == "__main__":
     main()
