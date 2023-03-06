@@ -5,7 +5,6 @@
   (:types
     patient
     rassScore wlkDist heartRate bloodPressure count SPO2 respirationRate tCount - number
-    ablation
     implant 
     ablation CIED - procedure
     test
@@ -148,14 +147,14 @@
 ;############################ End: Common flow for both the procedure types #################################
 
  (:action ConsiderSDDFollowUpablation     ; Follow-up tests for discharge consideration (ablation)
-  :parameters (?p - patient ?pt - procedure)
-  :precondition (and (considerSDD ?p) (procedureType ?p ablation))
+  :parameters (?p - patient ?pt - ablation)
+  :precondition (and (considerSDD ?p) (procedureType ?p ?pt))
   :effect (and (doWalkTest ?p)) 
   )
 
   (:action ConsiderSDDFollowUpCIED     ; Follow-up tests for discharge consideration (CIED)
-  :parameters (?p - patient ?pt - procedure)
-  :precondition (and (considerSDD ?p) (procedureType ?p CIED))
+  :parameters (?p - patient ?pt - CIED)
+  :precondition (and (considerSDD ?p) (procedureType ?p ?pt))
   :effect (and (doWalkTest ?p) (checkDevice ?p)) 
   )
 
@@ -174,8 +173,8 @@
 ;########################### Abnormality Procedure #################################
 
 (:action ABNBPAblation     ; Enabling all tests to be performed for procedure
-:parameters (?p - patient ?pt - procedure ?d - doctor)
-:precondition (and (not (bloodPressureNormal ?p)) (procedureType ?p Ablation))
+:parameters (?p - patient ?pt - ablation ?d - doctor)
+:precondition (and (not (bloodPressureNormal ?p)) (procedureType ?p ?pt))
 :effect (and (assessSymptoms ?p) (IVFluids ?p) (callMD ?d))
 )
 
@@ -186,26 +185,26 @@
 )
 
 (:action ABNSPO2Ablation    ; Enabling all tests to be performed for procedure
-:parameters (?p - patient ?pt - procedure ?d - doctor)
-:precondition (and (not (SPNormal ?p)) (procedureType ?p Ablation))
+:parameters (?p - patient ?pt - ablation ?d - doctor)
+:precondition (and (not (SPNormal ?p)) (procedureType ?p ?pt))
 :effect (and (startO2 ?p) (sedationRevarsal ?p) (callMD ?d) (OSA ?p))
 )
 
 (:action ABNBSPO2CIED     ; Enabling all tests to be performed for procedure
-:parameters (?p - patient ?pt - procedure ?d - doctor)
-:precondition (and (not (bloodPressureNormal ?p)) (procedureType ?p CIED))
+:parameters (?p - patient ?pt - CIED ?d - doctor)
+:precondition (and (not (bloodPressureNormal ?p)) (procedureType ?p ?pt))
 :effect (and (startO2 ?p) (CXR ?p) (callMD ?d))
 )
 
 (:action ABNHRAblation    ; Enabling all tests to be performed for procedure
-:parameters (?p - patient ?pt - procedure ?d - doctor)
-:precondition (and (not (heartRateNormal ?p)) (procedureType ?p Ablation))
+:parameters (?p - patient ?pt - ablation ?d - doctor)
+:precondition (and (not (heartRateNormal ?p)) (procedureType ?p ?pt))
 :effect (and (checkMeds ?p) (assessSymptoms ?p) (checkHeartRate ?p) (checkRythm ?p) (callMD ?d)) 
 )
 
 (:action ABNHRAblation    ; Enabling all tests to be performed for procedure
-:parameters (?p - patient ?pt - procedure ?d - doctor)
-:precondition (and (not (heartRateNormal ?p)) (procedureType ?p CIED))
+:parameters (?p - patient ?pt - CIED ?d - doctor)
+:precondition (and (not (heartRateNormal ?p)) (procedureType ?p ?pt))
 :effect (and (checkMeds ?p) (checkHeartRate ?p) (checkDevice ?p) (callMD ?d))   
 )
 )
