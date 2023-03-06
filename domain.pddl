@@ -49,9 +49,10 @@
   (CXR ?p - patient)
   (checkMeds ?p - patient)
   (checkRythm ?p - patient)
-  ; (considerDischarge ?p - patient)
-  ; (doWalkTest ?p - patient)
-  ; (deviceCheckNormal ?p)
+  (considerDischarge ?p - patient)
+  (doWalkTest ?p - patient)
+  (deviceCheckNormal ?p - patient)
+  (walkTestSuccessful ?p - patient)
   )
   ;#################################### Actions ##########################################
   (:action CheckProcedure     ; Checking procedure and enabling testing
@@ -137,42 +138,49 @@
   ; :effect (and (not(testsCompleted ?p)) (testRandom ?p))
   ; )
 
-  ; (:action AbnormalWalkTest     ; Walk test - abnormal
-  ; :parameters (?p - patient ?wlk - wlkDist ?d - doctor)
-  ; :precondition (and (doWalkTest ?p) (< (reading ?wlk) 400))
-  ; :effect (and (abnormal ?p) (callMD ?d)) 
-  ; )
+  (:action AbnormalWalkTest     ; Walk test - abnormal
+  :parameters (?p - patient ?wlk - wlkDist ?d - doctor)
+  :precondition (and (doWalkTest ?p) (< (reading ?wlk) 400))
+  :effect (and (abnormal ?p) (callMD ?d)) 
+  )
 
-  ; (:action NormalWalkTest     ; Walk test - normal
-  ; :parameters (?p - patient ?wlk - wlkDist)
-  ; :precondition (and (doWalkTest ?p) (>= (reading ?wlk) 400))
-  ; :effect (and (considerDischarge ?p)) 
-  ; )
+  (:action NormalWalkTestAblation     ; Walk test - normal ablation
+  :parameters (?p - patient ?wlk - wlkDist ?pt - ablation)
+  :precondition (and (doWalkTest ?p) (>= (reading ?wlk) 400) (procedureType ?p ?pt))
+  :effect (and (considerDischarge ?p) (walkTestSuccessful ?p)) 
+  )
+
+
+  (:action NormalWalkTestCIED    ; Walk test - normal CIED
+  :parameters (?p - patient ?wlk - wlkDist ?pt - CIED)
+  :precondition (and (doWalkTest ?p) (>= (reading ?wlk) 400) (deviceCheckNormal ?p) (procedureType ?p ?pt))
+  :effect (and (considerDischarge ?p) (walkTestSuccessful ?p)) 
+  )
 ; ;############################ End: Common flow for both the procedure types #################################
 
-;  (:action ConsiderSDDFollowUpablation     ; Follow-up tests for discharge consideration (ablation)
-;   :parameters (?p - patient ?pt - ablation)
-;   :precondition (and (considerSDD ?p) (procedureType ?p ?pt))
-;   :effect (and (doWalkTest ?p)) 
-;   )
+ (:action ConsiderSDDFollowUpablation     ; Follow-up tests for discharge consideration (ablation)
+  :parameters (?p - patient ?pt - ablation)
+  :precondition (and (considerSDD ?p) (procedureType ?p ?pt))
+  :effect (and (doWalkTest ?p)) 
+  )
 
-;   (:action ConsiderSDDFollowUpCIED     ; Follow-up tests for discharge consideration (CIED)
-;   :parameters (?p - patient ?pt - CIED)
-;   :precondition (and (considerSDD ?p) (procedureType ?p ?pt))
-;   :effect (and (doWalkTest ?p) (checkDevice ?p)) 
-;   )
+  (:action ConsiderSDDFollowUpCIED     ; Follow-up tests for discharge consideration (CIED)
+  :parameters (?p - patient ?pt - CIED)
+  :precondition (and (considerSDD ?p) (procedureType ?p ?pt))
+  :effect (and (doWalkTest ?p) (checkDevice ?p)) 
+  )
 
-  ; (:action DeviceCheckNormal     ; device check - normal
-  ; :parameters (?p - patient ?pt - CIED)
-  ; :precondition (and (checkDevice ?p) (deviceCheckNormal ?p) (procedureType ?p ?pt))
-  ; :effect (and (considerDischarge ?p)) 
-  ; )
+  (:action DeviceCheckNormal     ; device check - normal
+  :parameters (?p - patient ?pt - CIED)
+  :precondition (and (checkDevice ?p) (walkTestSuccessful ?p) (deviceCheckNormal ?p) (procedureType ?p ?pt))
+  :effect (and (considerDischarge ?p)) 
+  )
 
-  ;  (:action DeviceCheckAbnormal     ; device check - abnormal
-  ; :parameters (?p - patient  ?d - doctor)
-  ; :precondition (and (checkDevice ?p) (not (deviceCheckNormal ?p)))
-  ; :effect (and (abnormal ?p) (callMD ?d)) 
-  ; )
+   (:action DeviceCheckAbnormal     ; device check - abnormal
+  :parameters (?p - patient  ?d - doctor)
+  :precondition (and (checkDevice ?p) (not (deviceCheckNormal ?p)))
+  :effect (and (abnormal ?p) (callMD ?d)) 
+  )
 
 ; ;########################### Abnormality Procedure #################################
 

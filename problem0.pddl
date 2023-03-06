@@ -9,7 +9,7 @@
     CIED1 - CIED
     ablation1 - ablation
     rassScore1 - rassScore
-    ; wlkDist1 - wlkDist
+    wlkDist1 - wlkDist
     Hardik - doctor
     ; tc - tCount
 
@@ -25,12 +25,11 @@
     (= (reading bloodPressure1) 100)
     (= (reading bloodPressure2) 80)
     (= (reading rassScore1) 0)
-    ; (= (reading wlkDist1) 450)
-    ; (deviceCheckNormal patient1)
-    ; (callMD Hardik)
+    (= (reading wlkDist1) 450)
+    (deviceCheckNormal patient1)
 
 
 
     )
-  (:goal (and (considerSDD patient1)))
+  (:goal (and (considerDischarge patient1)))
 )
