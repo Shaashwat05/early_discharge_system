@@ -1,7 +1,7 @@
 from glob import glob
 from urllib import parse, request
 
-from companion_api import *
+from companion_api import query
 
 
 def filler(patient):
