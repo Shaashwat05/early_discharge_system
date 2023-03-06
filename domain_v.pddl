@@ -4,7 +4,7 @@
   ;#################################### types ##########################################
   (:types
     patient
-    rassScore heartRate bloodPressure1 bloodPressure2 count SPO2 respirationRate - number
+    rassScore wlkDist heartRate bloodPressure1 bloodPressure2 count SPO2 respirationRate - number
     ablation
     implant 
     Ablation CIED - procedure
@@ -21,7 +21,7 @@
   (operationPerformed ?p - patient)
   (performTests ?p - patient)
   (checkHeartRate ?hr - number) 
-  (checkBloopPressure ?bp - number) 
+  (checkBloodPressure ?bp - number) 
   (checkRespirationRate ?rr - number) 
   (checkSPO2 ?sp - number) 
   (heartRateNormal ?p - patient)
@@ -83,7 +83,7 @@
   (:action BPNormality     
   :parameters (?p - patient ?bp - number ?bpv1 - number  ?bpv2 - number ?bpn - number)
   :precondition (and (checkBloodPressure ?p) (>= (reading ?bpv1) 90) (<= (reading ?bpv1) 130) (>= (reading ?bpv2) 60) (<= (reading ?bpv1) 90))
-  :effect (and (bloodPressureNormal ?p) (not (checkBloopPressure ?p))) 
+  :effect (and (bloodPressureNormal ?p) (not (checkBloodPressure ?p))) 
   )
   (:action RRNormality     
   :parameters (?p - patient ?rr - number)
@@ -99,15 +99,15 @@
   (:durative-action Vitals15
     :parameters (?p patient)
     :duration (= ?duration 15)
-    :condition (and (durativeVitals15 ?p) (not (checkHeartRate ?p)) (not (checkBloopPressure ?p)) (not (checkSPO2 ?p)) (not (checkRespirationrate ?p)))
-    :effect (and (at start (checkHeartRate ?p)) (at start (checkBloopPressure ?p)) (at start  (checkSPO2 ?p)) (at start (checkRespirationrate ?p)))
+    :condition (and (durativeVitals15 ?p) (not (checkHeartRate ?p)) (not (checkBloodPressure ?p)) (not (checkSPO2 ?p)) (not (checkRespirationrate ?p)))
+    :effect (and (at start (checkHeartRate ?p)) (at start (checkBloodPressure ?p)) (at start  (checkSPO2 ?p)) (at start (checkRespirationrate ?p)))
   )
 
     (:durative-action Vitals30
     :parameters (?p patient)
     :duration (= ?duration 30)
-    :condition (and (durativeVital30 ?p) (not (checkHeartRate ?p)) (not (checkBloopPressure ?p)) (not (checkSPO2 ?p)) (not (checkRespirationrate ?p)))
-    :effect (and (at start (checkHeartRate ?p)) (at start (checkBloopPressure ?p)) (at start  (checkSPO2 ?p)) (at start (checkRespirationrate ?p)))
+    :condition (and (durativeVital30 ?p) (not (checkHeartRate ?p)) (not (checkBloodPressure ?p)) (not (checkSPO2 ?p)) (not (checkRespirationrate ?p)))
+    :effect (and (at start (checkHeartRate ?p)) (at start (checkBloodPressure ?p)) (at start  (checkSPO2 ?p)) (at start (checkRespirationrate ?p)))
   )
 
 
@@ -207,5 +207,6 @@
 :parameters (?p - patient ?pt - procedure ?t - test ?hr - number ?bp - number ?sp - number ?c - number)
 :precondition (and (not (heartRateNormal ?p)) (procedureType ?p CIED))
 :effect (and (checkMeds ?p) (checkHeartRate ?p) (checkDevice ?p) (callMD ?d))    ; (getECG ?p)
+)
 )
 
