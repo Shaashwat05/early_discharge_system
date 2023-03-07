@@ -3,7 +3,8 @@
   (:objects
     patient1 - patient
     heartRate1 - heartRate
-    bloodPressure1 bloodPressure2 - bloodPressure
+    bp1 - bloodPressure1
+    bp2 - bloodPressure2
     SPO21 - SpO2
     respirationRate1 - respirationRate
     CIED1 - CIED
