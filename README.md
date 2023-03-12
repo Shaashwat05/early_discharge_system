@@ -1,12 +1,12 @@
 # Early Discharge System
 ## Streamlining decisions regarding safety and efficacy of same day inpatients’ discharge after cardiac electrophysiology procedures
 
-In this project, we have built a planning-based system utilizing [PDDL](https://planning.wiki/guide/whatis/pddl#:~:text=Planning%20Domain%20Definition%20Language%20(PDDL)%20is%20a%20family%20of%20languages,with%20different%20levels%20of%20expressivity), [NextKB](https://www.qrg.northwestern.edu/nextkb/index.html),  and [Companions Cognitive Architecture](https://www.qrg.northwestern.edu/papers/Files/FS104KForbus.pdf) to generate pathways for determining safe discharge of post-operative patients. Specific criteria used for making such decisions include the type of procedure, immediate surgical outcome, presence/absence of any complications, any unexpected surgical findings, post-operative vital signs, results of planned postoperative imaging, and lab-work or other studies, among other things.
+In this project, we have built a planning-based system utilizing [PDDL](https://planning.wiki/guide/whatis/pddl#:~:text=Planning%20Domain%20Definition%20Language%20(PDDL)%20is%20a%20family%20of%20languages,with%20different%20levels%20of%20expressivity), [NextKB](https://www.qrg.northwestern.edu/nextkb/index.html),  and [Companions Cognitive Architecture](https://www.qrg.northwestern.edu/papers/Files/FS104KForbus.pdf) to generate pathways for determining safe discharge of post-operative patients. Specific criteria used for making such decisions include the type of procedure, immediate surgical outcome, presence/absence of any complications, any unexpected surgical findings, post-operative vital signs, results of planned postoperative imaging, and lab work or other studies, among other things.
 
-The system resolves to one (or more) of the following 4 goal-states and generates a planning graph that can be used as a step-by-step action guide by physicians:
+The system resolves to one (or more) of the following 4 goal states and generates a planning graph that can be used as a step-by-step action guide by physicians:
 1. considerDischarge - patient can be safely discharged.
 2. callMD - further inspection is required by a physician.
-3. checkMeds - patient's medicine doses are to be updates immediately, primarily due to high/low heart rate
+3. checkMeds - patient's medicine doses are to be updated immediately, primarily due to high/low heart rate
 4. startO2 - patient's O2 level is low. They need to be immediately put on a ventilator. 
 
 ## Project Architecture
@@ -59,7 +59,7 @@ You can define one of the following 4 goal states:
 4. (startO2 <patient_var>) - where <patient_var> must be of type patient
 ```
 
-You can refer to the existing problem.pddl and domain.pddl files to understand the existing "types". Please refer to the reasoning graphs provided above to understand how the different goal states are triggerred. Please note that the patients can only be discharged (goal state: considerDischarge), if their vital signs are normal. For normal vital ranges, refer to the following values:
+You can refer to the existing problem.pddl and domain.pddl files to understand the existing "types". Please refer to the reasoning graphs provided above to understand how the different goal states are triggered. Please note that the patients can only be discharged (goal state: considerDischarge), if their vital signs are normal. For normal vital ranges, refer to the following values:
 ```
 1. Heart Rate: (50-120)
 2. BP1 (Systolic Blood Pressure): [90-130]
@@ -69,8 +69,8 @@ You can refer to the existing problem.pddl and domain.pddl files to understand t
 6. Walking Distance: [400 or above]
 7. RASS Score: [-1, 0]
 ```
-** Note: "()" signifies exclusive ranges and "[]" signifies inclusive ranges.
-Additionally, CIED operated patients can only be discharged if their device check came normal, i.e., their init state has the following predicate: 
+** Note: "()" signifies exclusive ranges, and "[]" signifies inclusive ranges.
+Additionally, CIED-operated patients can only be discharged if their device check came normal, i.e., their init state has the following predicate: 
 (deviceCheckNormal <patient_var>) - where <patient_var> must be of type patient
 
 ## References:
