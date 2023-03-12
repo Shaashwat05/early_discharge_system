@@ -73,5 +73,9 @@ You can refer to the existing problem.pddl and domain.pddl files to understand t
 Additionally, CIED-operated patients can only be discharged if their device check came normal, i.e., their init state has the following predicate: 
 (deviceCheckNormal <patient_var>) - where <patient_var> must be of type patient
 
+### Adding New Patients and Generating Actions to be Performed
+A new patient can be added to the Knowledge Base directly by writing a KRF flat file. The structure of this file would be similar to the ones provided as examples (*Doe.krf). This file includes medical information corresponding to the patient and other identifiable information. You can add this patient to the Knowledge Base by uploading the KRF file to the interaction manager on Companions. Once the patient is in the database, you can directly run all the possible outcomes for the patient (or any other patient in the Knowledge base) wrapped in get_outcomes function in the main.py file. The resolution (“ok”/”error”) of the patient can be obtained from get_outcomes(“<patientname>”) as a dictionary. If the patient does not exist in the Knowledge base, a NameError is raised.
+
+
 ## References:
 1. This implementation is done as an assignment for the following MSAI course (Winter 2023): [Northwestern University - MSAI 371: Knowledge Representation and Reasoning](https://www.mccormick.northwestern.edu/artificial-intelligence/curriculum/descriptions/msai-371.html). The instructor for this course is: [Prof. Mohammed Alam](https://www.mccormick.northwestern.edu/research-faculty/directory/profiles/alam-mohammed.html).
