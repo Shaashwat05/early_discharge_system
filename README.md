@@ -1,4 +1,4 @@
-# Early Discharge System: 
+# Early Discharge System
 ## Streamlining decisions regarding safety and efficacy of same day inpatients’ discharge after cardiac electrophysiology procedures
 
 In this project, we have built a planning-based system utilizing PDDL to generate pathways for determining safe discharge of post-operative patients. Specific criteria used for making such decisions include the type of procedure, immediate surgical outcome, presence/absence of any complications, any unexpected surgical findings, post-operative vital signs, results of planned postoperative imaging, and lab-work or other studies, among other things.
