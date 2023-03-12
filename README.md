@@ -47,8 +47,29 @@ python test.py
 4. Press Enter when prompted for selecting planner. i.e., choose No Options (use defaults)
 ```
 
+### To test new inputs:
 
+For testing a new scenario, you can either create a new problem.pddl file, or update one of the existing problem.pddl files. If you are defining a new problem, please note that the domain of our pddl system is: **earlyDischarge** and your initial state must contain these two predicates: 
+(operationPerformed <patient_var>) & (procedureType <patient_var> <proc_type_var>) where <patient_var> must be of type patient, and <proc_type_var> must be either of type CIED or ablation. 
+You can define one of the following 4 goal states:
+```
+1. (considerDischarge <patient_var>) - where <patient_var> must be of type patient
+2. (callMD <doctor_var>) - where <doctor_var> must be of type doctor
+3. (checkMeds <patient_var>) - where <patient_var> must be of type patient
+4. (startO2 <patient_var>) - where <patient_var> must be of type patient
+```
 
+You can refer to the existing problem.pddl and domain.pddl files to understand the existing "types". Please refer to the reasoning graphs provided above to understand how the different goal states are triggerred. Please note that the patients can only be discharged (goal state: considerDischarge), if their vital signs are normal. For normal vital ranges, refer to the following values:
+```
+1. Heart Rate: (50-120)
+2. BP1 (Systolic Blood Pressure): [90-130]
+3. BP2 (Diastolic Blood Pressure): [60-90]
+4. Respiration Rate: [12-20]
+5. SPO2: [90 or above]
+6. Walking Distance: [400 or above]
+7. RASS Score: [-1, 0]
+```
+** Note: "()" signifies exclusive ranges and "[]" signifies inclusive ranges.
 
 ## References:
 1. This implementation is done as an assignment for the following MSAI course (Winter 2023): [Northwestern University - MSAI 371: Knowledge Representation and Reasoning](https://www.mccormick.northwestern.edu/artificial-intelligence/curriculum/descriptions/msai-371.html). The instructor for this course is: [Prof. Mohammed Alam](https://www.mccormick.northwestern.edu/research-faculty/directory/profiles/alam-mohammed.html).
