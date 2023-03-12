@@ -70,6 +70,8 @@ You can refer to the existing problem.pddl and domain.pddl files to understand t
 7. RASS Score: [-1, 0]
 ```
 ** Note: "()" signifies exclusive ranges and "[]" signifies inclusive ranges.
+Additionally, CIED operated patients can only be discharged if their device check came normal, i.e., their init state has the following predicate: 
+(deviceCheckNormal <patient_var>) - where <patient_var> must be of type patient
 
 ## References:
 1. This implementation is done as an assignment for the following MSAI course (Winter 2023): [Northwestern University - MSAI 371: Knowledge Representation and Reasoning](https://www.mccormick.northwestern.edu/artificial-intelligence/curriculum/descriptions/msai-371.html). The instructor for this course is: [Prof. Mohammed Alam](https://www.mccormick.northwestern.edu/research-faculty/directory/profiles/alam-mohammed.html).
