@@ -21,8 +21,8 @@ Tested on MacBook Pro (14-inch, 2021) - Apple M1 Pro (Monterey 12.5)
 1. Python 3.x
 2. Preferred IDE - [Visual Studio Code](https://code.visualstudio.com/download)
 3. (Optional) Install the PDDL extension in visual studio code (developed by Jan Dolejsi) to view the planner outputs as graphs
-[Installation and Usage Guide](https://github.com/jan-dolejsi/vscode-pddl)
 ```
+[Installation and Usage Guide](https://github.com/jan-dolejsi/vscode-pddl)
 
 ### To test the code, run the following command:
 
