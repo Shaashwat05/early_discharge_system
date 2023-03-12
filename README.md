@@ -9,6 +9,13 @@ The system resolves to one (or more) of the following 4 goal-states and generate
 3. checkMeds - patient's medicine doses are to be updates immediately, primarily due to high/low heart rate
 4. startO2 - patient's O2 level is low. They need to be immediately put on a ventilator. 
 
+## Project Architecture
+![Architecture](https://github.com/Shaashwat05/early_discharge_system/blob/main/images/project_architecture.png?raw=true)
+
+## Reasoning
+![Reasoning_Graph_1](https://github.com/Shaashwat05/early_discharge_system/blob/main/images/reasoning_1.png?raw=true)
+![Reasoning_Graph_2](https://github.com/Shaashwat05/early_discharge_system/blob/main/images/reasoning_2.png?raw=true)
+
 ## To run the code:
 
 ### Devices:
@@ -20,7 +27,7 @@ Tested on MacBook Pro (14-inch, 2021) - Apple M1 Pro (Monterey 12.5)
 ```
 1. Python 3.x
 2. Preferred IDE: Visual Studio Code -  https://code.visualstudio.com/download
-3. (Optional) Install the PDDL extension in visual studio code (developed by Jan Dolejsi) to view the planner outputs as graphs.
+3. Install the PDDL extension in visual studio code (developed by Jan Dolejsi) to view the planner outputs as graphs.
 Installation and Usage Guide - https://github.com/jan-dolejsi/vscode-pddl
 ```
 
