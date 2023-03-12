@@ -1,4 +1,4 @@
-(define (problem soko-ichii-pallette)
+(define (problem considerDischarge-CIED)
   (:domain earlyDischarge)
   (:objects
     patient1 - patient
@@ -25,5 +25,5 @@
     (= (reading wlkDist1) 450)
     (deviceCheckNormal patient1)
     )
-  (:goal (and (callMD Hardik)))
+  (:goal (and (considerDischarge patient1)))
 )

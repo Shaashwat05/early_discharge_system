@@ -1,9 +1,10 @@
-(define (problem soko-ichii-pallette)
+(define (problem checkMeds-heartRate)
   (:domain earlyDischarge)
   (:objects
     patient1 - patient
     heartRate1 - heartRate
-    bloodPressure1 bloodPressure2 - bloodPressure
+    bp1 - bloodPressure1
+    bp2 - bloodPressure2
     SPO21 - SpO2
     respirationRate1 - respirationRate
     CIED1 - CIED
@@ -18,8 +19,8 @@
     (= (reading heartRate1) 125)
     (= (reading SPO21) 60)
     (= (reading respirationRate1) 15)
-    (= (reading bloodPressure1) 100)
-    (= (reading bloodPressure2) 80)
+    (= (reading bp1) 100)
+    (= (reading bp2) 80)
     (= (reading rassScore1) 0)
     (= (reading wlkDist1) 450)
     (deviceCheckNormal patient1)

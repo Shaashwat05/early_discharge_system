@@ -4,13 +4,9 @@
   ;#################################### types ##########################################
   (:types
     patient
-    ; rassScore wlkDist heartRate bloodPressure count SPO2 respirationRate tCount - number
     heartRate bloodPressure1 bloodPressure2 respirationRate SPO2 rassScore wlkDist - number
-    ; implant 
     ablation CIED - procedure
-    ; test
     doctor
-    ; device
   )
   ;#################################### Functions ##########################################
   (:functions
@@ -33,9 +29,6 @@
   (respirationRateNormal ?p - patient)
   (SPNormal ?p - patient)
   (Abnormal ?p - patient)
-  ; (durativeVitals15 ?p - patient)
-  ; (durativeVitals30 ?p - patient)
-  ; (isAssessedRassScore ?p - patient)
   (normalRassScore ?p - patient)
   (considerSDD ?p - patient)
   (procedureType ?p - patient ?pt - procedure)
@@ -67,11 +60,6 @@
   :effect (and (checkHeartRate ?p) (checkBloodPressure ?p) (checkSPO2 ?p) (checkRespirationrate ?p)) ; (increase (reading c) 1) ; (durativeVitals15 ?p) 
   )
 
-  ; (:action DoneTesting     ; Enabling all tests to be performed for procedure
-  ; :parameters (?p - patient)
-  ; :precondition (and (checkedHeartRate ?p) (checkedBloodPressure ?p) (checkedRespirationRate ?p) (checkedSPO2 ?p))
-  ; :effect (and (testsCompleted ?p))   ;  (not (durativeVitals15 ?p))
-  ; )
   (:action Abnormality     ; Enabling all tests to be performed for procedure
   :parameters (?p - patient)
   :precondition (or (not (respirationRateNormal ?p)) (not (heartRateNormal ?p)) (not (bloodPressureNormal ?p)) (not (SPNormal ?p)))
@@ -100,25 +88,6 @@
   :effect (and (SPNormal ?p) (not (checkSPO2 ?p)) (checkedSPO2 ?p)) 
   )
 
-;   ;(:durative-action Vitals15
-;   ;  :parameters (?p patient)
-;   ;  :duration (= ?duration 15)
-;   ;  :condition (and (durativeVitals15 ?p) (not (checkHeartRate ?p)) (not (checkBloodPressure ?p)) (not (checkSPO2 ?p)) (not (checkRespirationrate ?p)))
-;   ;  :effect (and (at start (checkHeartRate ?p)) (at start (checkBloodPressure ?p)) (at start  (checkSPO2 ?p)) (at start (checkRespirationrate ?p)))
-;   ;)
-
-;   ;  (:durative-action Vitals30
-;   ;  :parameters (?p patient)
-;   ;  :duration (= ?duration 30)
-;   ;  :condition (and (durativeVital30 ?p) (not (checkHeartRate ?p)) (not (checkBloodPressure ?p)) (not (checkSPO2 ?p)) (not (checkRespirationrate ?p)))
-;   ;  :effect (and (at start (checkHeartRate ?p)) (at start (checkBloodPressure ?p)) (at start  (checkSPO2 ?p)) (at start (checkRespirationrate ?p)))
-;   ;)
-
-
-
-
-
-
 ; ;############################ Begin: Common flow for both the procedure types ##################################
   (:action AssessRassScore     ; Assess Rass Score
   :parameters (?p - patient ?rsc - rassScore)
@@ -131,12 +100,6 @@
   :precondition (and (normalRassScore ?p))
   :effect (and (considerSDD ?p)) 
   )
-
-  ; (:action AbnormalRassFollowUp     ; Actions to be taken when Rass socre is abnormal
-  ; :parameters (?p - patient, ?rsc - rassScore)
-  ; :precondition (and (not (normalRassScore ?p)) (>= (reading ?rsc) 2) (<= (reading ?rsc) -2))
-  ; :effect (and (not(testsCompleted ?p)) (testRandom ?p))
-  ; )
 
   (:action AbnormalWalkTest     ; Walk test - abnormal
   :parameters (?p - patient ?wlk - wlkDist ?d - doctor)

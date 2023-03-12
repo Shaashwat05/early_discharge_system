@@ -1,9 +1,10 @@
-(define (problem soko-ichii-pallette)
+(define (problem startO2)
   (:domain earlyDischarge)
   (:objects
     patient1 - patient
     heartRate1 - heartRate
-    bloodPressure1 bloodPressure2 - bloodPressure
+    bp1 - bloodPressure1
+    bp2 - bloodPressure2
     SPO21 - SpO2
     respirationRate1 - respirationRate
     CIED1 - CIED
@@ -16,10 +17,10 @@
     (operationPerformed patient1)
     (procedureType patient1 ablation1)
     (= (reading heartRate1) 80)
-    (= (reading SPO21) 90)
+    (= (reading SPO21) 70)
     (= (reading respirationRate1) 15)
-    (= (reading bloodPressure1) 100)
-    (= (reading bloodPressure2) 80)
+    (= (reading bp1) 100)
+    (= (reading bp2) 80)
     (= (reading rassScore1) 0)
     (= (reading wlkDist1) 450)
     (deviceCheckNormal patient1)
