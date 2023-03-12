@@ -16,6 +16,26 @@ The system resolves to one (or more) of the following 4 goal states and generate
 ![Reasoning_Graph_1](https://github.com/Shaashwat05/early_discharge_system/blob/main/images/reasoning_1.png?raw=true)
 ![Reasoning_Graph_2](https://github.com/Shaashwat05/early_discharge_system/blob/main/images/reasoning_2.png?raw=true)
 
+## Sample Input-Output
+Here’s a sample of predicates given in our typical KRF file (corresponding to problem0.pddl):
+
+(in-microtheory MedProj)
+
+(isa JohnDoe Patient)
+(procedureType JohnDoe CIED1)
+(reading JohnDoe heartRate1 80)
+(reading JohnDoe SpO21 91)
+(reading JohnDoe respirationRate1 15)
+(reading JohnDoe bp1 100)
+(reading JohnDoe bp2 80)
+(reading JohnDoe rassScore1 0)
+(reading JohnDoe wlkDist1 450)
+(deviceCheckNormal JohnDoe)
+
+The planner graph for the above input looks like this:
+![Planner Output](https://github.com/Shaashwat05/early_discharge_system/blob/main/images/planner_output.png?raw=true)
+
+
 ## To run the code:
 
 ### Devices:
